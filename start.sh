@@ -8,7 +8,7 @@ php artisan config:cache
 php artisan route:cache
 
 # Lancer les migrations
-php artisan migrate --force
+php artisan migrate --force 2>/dev/null || true
 
 # Démarrer PHP-FPM en arrière-plan
 php-fpm -D
