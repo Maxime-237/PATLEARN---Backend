@@ -19,6 +19,8 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             CoursSeeder::class,
             LeconSeeder::class,
+            ExerciseSeeder::class,
+            QuestionSeeder::class,
         ]);
     }
 }
