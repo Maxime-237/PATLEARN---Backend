@@ -4,15 +4,16 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Nette\Schema\ValidationException;
+use Illuminate\Validation\ValidationException;
 
 class AuthController extends Controller
 {
     //REGISTER
     public function register(Request $request) {
         $request->validate([
-            'username'     => 'required|string|max:255',
+            'username' => 'required|string|max:255',
             'email'    => 'required|string|email|unique:users',
             'password' => 'required|string|min:6',
         ]);
@@ -24,12 +25,12 @@ class AuthController extends Controller
             'role'     => 'user',
         ]);
 
-        $token = $user->createToken('auth_token')->plainTextToken;
+        Auth::login($user);
+        $request->session()->regenerate();
 
         return response()->json([
             'message' => 'Inscription réussie',
-            'User'    => $user,
-            'token'  => $token,
+            'user'    => $user,
         ], 201);
     }
 
@@ -40,26 +41,25 @@ class AuthController extends Controller
             'password' => 'required',
         ]);
 
-        $user = User::where('email', $request->email)->first();
-
-        if (! $user || ! Hash::check($request->password, $user->password)) {
+        if (! Auth::attempt($request->only('email', 'password'))) {
             throw ValidationException::withMessages([
                 'email' => ['Identifiants incorrects.'],
             ]);
         }
 
-        $token = $user->createToken('auth_token')->plainTextToken;
+        $request->session()->regenerate();
 
         return response()->json([
-            'message' => 'connexion réussie',
-            'user' => $user,
-            'token' => $token,
+            'message' => 'Connexion réussie',
+            'user' => Auth::user(),
         ]);
     }
 
     //LOGOUT
     public function logout(Request $request) {
-        $request->user()->currentAccessToken()->delete();
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
 
         return response()->json([
             'message' => 'Déconnexion réussie',
