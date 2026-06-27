@@ -18,6 +18,18 @@ if (\App\Models\Cours::count() === 0) {
 } else {
     echo 'Données déjà présentes';
 }
+
+if (\App\Models\User::where('role', 'admin')->count() === 0) {
+    \App\Models\User::create([
+        'username' => 'Admin',
+        'email'    => 'admin@pattlearn.com',
+        'password' => bcrypt('groupe6_patlearn'),
+        'role'     => 'admin',
+    ]);
+    echo 'Admin créé';
+} else {
+    echo 'Admin déjà présent';
+}
 "
 
 # Démarrer PHP-FPM en arrière-plan
