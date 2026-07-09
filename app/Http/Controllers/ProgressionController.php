@@ -37,7 +37,7 @@ class ProgressionController extends Controller
         );
 
         // Débloquer la leçon suivante si terminée
-       if($request->satut === 'termine') {
+       if($request->statut === 'termine') {
 
             $lecon = Lecon::findOrFail($lecon_id);
             $leconSuivante = Lecon::where('cours_id', $lecon->cours_id)

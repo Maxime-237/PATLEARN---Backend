@@ -14,11 +14,13 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        User::create([
-            'username' => 'Admin',
-            'email' => 'admin@patlearn.com',
-            'password' => Hash::make('adminPatlearn123'),
-            'role' => 'admin',
-        ]);
+        User::updateOrCreate(
+            ['email' => 'admin@patlearn.com'],
+            [
+                'username' => 'Admin',
+                'password' => Hash::make('adminPatlearn123'),
+                'role' => 'admin',
+            ]
+        );
     }
 }

@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Exercise;
 use App\Models\Question;
 use Illuminate\Database\Seeder;
 
@@ -815,8 +816,28 @@ class QuestionSeeder extends Seeder
         ['exercise_id' => 105, 'question' => 'Traduisez "Neuf" en Médumba', 'type' => 'texte_libre', 'reponse_correcte' => 'Ɛvu', 'options' => null],
         ];
 
+        $existingExerciseIds = Exercise::whereIn('id', array_column($questions, 'exercise_id'))
+            ->pluck('id')
+            ->all();
+
         foreach ($questions as $q) {
-            Question::create($q);
+            if (!in_array($q['exercise_id'], $existingExerciseIds, true)) {
+                continue;
+            }
+
+            $options = is_string($q['options']) ? json_decode($q['options'], true) : $q['options'];
+
+            Question::updateOrCreate(
+                [
+                    'exercise_id' => $q['exercise_id'],
+                    'question' => $q['question'],
+                ],
+                [
+                    'type' => $q['type'],
+                    'reponse_correcte' => $q['reponse_correcte'],
+                    'options' => $options,
+                ]
+            );
         }
     }
 }

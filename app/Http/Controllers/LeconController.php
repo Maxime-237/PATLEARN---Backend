@@ -3,14 +3,34 @@
 namespace App\Http\Controllers;
 
 use App\Models\Lecon;
-use Illuminate\Auth\Access\Response;
 use Illuminate\Http\Request;
 
 class LeconController extends Controller
 {
+    //Toutes les lecons pour le tableau de bord
+    public function all(Request $request) {
+        $request->validate([
+            'cours_id' => 'sometimes|integer|exists:cours,id',
+        ]);
+
+        $lecons = Lecon::query()
+            ->with('cours')
+            ->withCount('exercises')
+            ->when($request->filled('cours_id'), function ($query) use ($request) {
+                $query->where('cours_id', $request->integer('cours_id'));
+            })
+            ->orderBy('cours_id')
+            ->orderBy('ordre')
+            ->get();
+
+        return response()->json($lecons);
+    }
+
     //Lecons d'un cours
     public function index($cours_id) {
         $lecons = Lecon::where('cours_id', $cours_id)
+            ->with('cours')
+            ->withCount('exercises')
             ->orderBy('ordre')
             ->get();
 

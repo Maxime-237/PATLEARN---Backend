@@ -28,8 +28,10 @@ class CoursSeeder extends Seeder
              ]
         ];
         foreach ($cours as $c) {
-            Cours::create($c);
+            Cours::updateOrCreate(
+                ['nom' => $c['nom']],
+                ['description' => $c['description']]
+            );
         }
     }
 }
-

@@ -49,6 +49,13 @@ class LeconSeeder extends Seeder
                 'ordre'       => 4,
                 'statut'      => 'verrouille',
             ],
+            [
+                'cours_id' => $duala->id,
+                'titre'       => 'Les Nombres',
+                'description' => 'Apprenez à compter en Duala',
+                'ordre'       => 5,
+                'statut'      => 'verrouille',
+            ],
 
              // Leçons Ewondo (cours_id = 2)
             [
@@ -77,6 +84,13 @@ class LeconSeeder extends Seeder
                 'titre'       => 'Verbes d\'Action',
                 'description' => 'Apprenez à construire les premières phrases en Ewondo',
                 'ordre'       => 4,
+                'statut'      => 'verrouille',
+            ],
+            [
+                'cours_id' => $ewondo->id,
+                'titre'       => 'Les Nombres',
+                'description' => 'Apprenez à compter en Ewondo',
+                'ordre'       => 5,
                 'statut'      => 'verrouille',
             ],
 
@@ -108,11 +122,28 @@ class LeconSeeder extends Seeder
                 'description' => 'Apprenez à construire les premières phrases en Médumba',
                 'ordre'       => 4,
                 'statut'      => 'verrouille',
+            ],
+            [
+                'cours_id' => $medumba->id,
+                'titre'       => 'Les Nombres',
+                'description' => 'Apprenez à compter en Médumba',
+                'ordre'       => 5,
+                'statut'      => 'verrouille',
             ]
         ];
 
         foreach ($lecons as $l) {
-            Lecon::create($l);
+            Lecon::updateOrCreate(
+                [
+                    'cours_id' => $l['cours_id'],
+                    'ordre' => $l['ordre'],
+                ],
+                [
+                    'titre' => $l['titre'],
+                    'description' => $l['description'],
+                    'statut' => $l['statut'],
+                ]
+            );
         }
     }
 }
