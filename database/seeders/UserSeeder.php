@@ -17,7 +17,7 @@ class UserSeeder extends Seeder
         User::create([
             'username' => 'Admin',
             'email' => 'admin@patlearn.com',
-            'password' => Hash::make('adminPatlearn123'),
+            'password' => Hash::make('PatlearnGrp6'),
             'role' => 'admin',
         ]);
     }

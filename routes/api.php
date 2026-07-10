@@ -8,6 +8,7 @@ use App\Http\Controllers\LeconController;
 use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\ReponseController;
 use App\Http\Controllers\ProgressionController;
+use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -78,6 +79,13 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/exercises/{exercise_id}/questions', [QuestionController::class, 'store']);
         Route::put('/questions/{id}',                     [QuestionController::class, 'update']);
         Route::delete('/questions/{id}',                  [QuestionController::class, 'destroy']);
+
+        Route::get('/stats', [AuthController::class, 'stats']);
+        Route::get('/users', [UserController::class, 'index']);
+        Route::delete('/users/{id}', [UserController::class, 'destroy']);
+
+        Route::put('/profile',  [AuthController::class, 'updateProfile']);
+        Route::put('/password', [AuthController::class, 'updatePassword']);
     });
 
 });

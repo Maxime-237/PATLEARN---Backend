@@ -4,7 +4,7 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Cross-Origin Resource Sharing (CORS) Configuration
+    | Cross-Origin Resource Shring (CORS) Configuration
     |--------------------------------------------------------------------------
     |
     | Here you may configure your settings for cross-origin resource sharing
@@ -19,7 +19,10 @@ return [
 
     'allowed_methods' => ['*'],
 
-    'allowed_origins' => ['https://patlearn.vercel.app', 'http://localhost:3000',],
+    'allowed_origins' => [
+        'https://patlearn.vercel.app',
+        'http://localhost:3000',
+    ],
 
     'allowed_origins_patterns' => [],
 

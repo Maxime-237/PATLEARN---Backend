@@ -72,4 +72,50 @@ class AuthController extends Controller
     }
 
 
+    public function stats()
+{
+    return response()->json([
+        'users'     => User::count(),
+        'cours'     => \App\Models\Cours::count(),
+        'lecons'    => \App\Models\Lecon::count(),
+        'exercises' => \App\Models\Exercise::count(),
+        'questions' => \App\Models\Question::count(),
+    ]);
+}
+
+    public function updateProfile(Request $request)
+{
+    $request->validate([
+        'username' => 'required|string|max:255',
+        'email'    => 'required|email|unique:users,email,' . $request->user()->id,
+    ]);
+
+    $request->user()->update([
+        'username' => $request->username,
+        'email'    => $request->email,
+    ]);
+
+    return response()->json([
+        'message' => 'Profil mis à jour',
+        'user'    => $request->user(),
+    ]);
+}
+
+public function updatePassword(Request $request)
+{
+    $request->validate([
+        'current_password' => 'required',
+        'new_password'     => 'required|min:6|confirmed',
+    ]);
+
+    if (!Hash::check($request->current_password, $request->user()->password)) {
+        return response()->json(['message' => 'Mot de passe actuel incorrect'], 422);
+    }
+
+    $request->user()->update([
+        'password' => Hash::make($request->new_password),
+    ]);
+
+    return response()->json(['message' => 'Mot de passe modifié avec succès']);
+}
 }

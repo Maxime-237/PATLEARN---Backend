@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('exercise_id')->constrained('exercises')->onDelete('cascade');
             $table->text('question');
-            $table->enum('type', ['qcm', 'vrai_faux', 'text_libre'])->default('qcm');
+            $table->enum('type', ['qcm', 'vrai_faux', 'texte_libre'])->default('qcm');
             $table->string('reponse_correcte');
             $table->json('options')->nullable();
             $table->timestamps();
