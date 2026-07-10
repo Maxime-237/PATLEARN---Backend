@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Nette\Schema\ValidationException;
+use Illuminate\Validation\ValidationException;
 
 class AuthController extends Controller
 {
@@ -28,7 +28,7 @@ class AuthController extends Controller
 
         return response()->json([
             'message' => 'Inscription réussie',
-            'User'    => $user,
+            'user'    => $user,
             'token'  => $token,
         ], 201);
     }
