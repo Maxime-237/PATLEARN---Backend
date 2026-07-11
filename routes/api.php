@@ -55,6 +55,10 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/progressions',                    [ProgressionController::class, 'index']);
     Route::post('/lecons/{lecon_id}/progression',  [ProgressionController::class, 'store']);
 
+    //Profil (tout utilisateur connecté peut modifier son propre profil/mot de passe)
+    Route::put('/profile',  [AuthController::class, 'updateProfile']);
+    Route::put('/password', [AuthController::class, 'updatePassword']);
+
     // ================================
     // ROUTES ADMIN
     // ================================
@@ -84,9 +88,6 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/stats', [AuthController::class, 'stats']);
         Route::get('/users', [UserController::class, 'index']);
         Route::delete('/users/{id}', [UserController::class, 'destroy']);
-
-        Route::put('/profile',  [AuthController::class, 'updateProfile']);
-        Route::put('/password', [AuthController::class, 'updatePassword']);
     });
 
 });
