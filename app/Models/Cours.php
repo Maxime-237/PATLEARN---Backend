@@ -18,6 +18,10 @@ class Cours extends Model
         return $this->hasMany(Lecon::class);
     }
 
+    public function mots() : HasMany {
+        return $this->hasMany(Mot::class);
+    }
+
     public function inscriptions() : HasMany {
         return $this->hasMany(Inscription::class);
     }

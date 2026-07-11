@@ -23,6 +23,7 @@ class DatabaseSeeder extends Seeder
             QuestionDualaSeeder::class,
             QuestionEwondoSeeder::class,
             QuestionMedumbaSeeder::class,
+            MotSeeder::class,
         ]);
     }
 }

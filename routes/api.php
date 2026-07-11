@@ -5,6 +5,7 @@ use App\Http\Controllers\CoursController;
 use App\Http\Controllers\ExerciseController;
 use App\Http\Controllers\InscriptionController;
 use App\Http\Controllers\LeconController;
+use App\Http\Controllers\MotController;
 use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\ReponseController;
 use App\Http\Controllers\ProgressionController;
@@ -55,6 +56,9 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/progressions',                    [ProgressionController::class, 'index']);
     Route::post('/lecons/{lecon_id}/progression',  [ProgressionController::class, 'store']);
 
+    //Mots (prononciation)
+    Route::get('/cours/{cours_id}/mots', [MotController::class, 'index']);
+
     //Profil (tout utilisateur connecté peut modifier son propre profil/mot de passe)
     Route::put('/profile',  [AuthController::class, 'updateProfile']);
     Route::put('/password', [AuthController::class, 'updatePassword']);
@@ -84,6 +88,11 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/exercises/{exercise_id}/questions', [QuestionController::class, 'store']);
         Route::put('/questions/{id}',                     [QuestionController::class, 'update']);
         Route::delete('/questions/{id}',                  [QuestionController::class, 'destroy']);
+
+        // Mots
+        Route::post('/cours/{cours_id}/mots', [MotController::class, 'store']);
+        Route::put('/mots/{id}',              [MotController::class, 'update']);
+        Route::delete('/mots/{id}',           [MotController::class, 'destroy']);
 
         Route::get('/stats', [AuthController::class, 'stats']);
         Route::get('/users', [UserController::class, 'index']);
