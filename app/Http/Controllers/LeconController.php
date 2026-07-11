@@ -42,7 +42,7 @@ class LeconController extends Controller
             'titre' => 'required|string',
             'description' => 'nullable|string',
             'ordre' => 'required|integer',
-            'statut' => 'in:verrouille, debloque',
+            'statut' => 'in:verrouille,debloque',
         ]);
 
         $lecon = Lecon::create([
