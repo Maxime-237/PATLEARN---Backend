@@ -46,7 +46,7 @@ class User extends Authenticatable
     }
 
     public function cours() : BelongsToMany {
-        return $this->belongsToMany(Cours::class, 'inscription');
+        return $this->belongsToMany(Cours::class, 'inscriptions');
     }
 
     public function progressions() : HasMany {

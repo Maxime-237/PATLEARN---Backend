@@ -37,6 +37,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::delete('/cours/{cours_id}/desinscrire', [InscriptionController::class, 'destroy']);
 
     //Lecons
+    Route::get('/lecons', [LeconController::class, 'all']);
     Route::get('/cours/{cours_id}/lecons', [LeconController::class, 'index']);
     Route::get('lecons/{id}', [LeconController::class, 'show']);
 

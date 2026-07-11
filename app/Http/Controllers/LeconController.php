@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Inscription;
 use App\Models\Lecon;
 use Illuminate\Auth\Access\Response;
 use Illuminate\Http\Request;
@@ -11,10 +12,26 @@ class LeconController extends Controller
     //Lecons d'un cours
     public function index($cours_id) {
         $lecons = Lecon::where('cours_id', $cours_id)
+            ->with('cours')
+            ->withCount('exercises')
             ->orderBy('ordre')
             ->get();
 
         return response()->json($lecons);
+    }
+
+    //Lecons de tous les cours auxquels l'utilisateur est inscrit (ou d'un cours précis via ?cours_id=)
+    public function all(Request $request) {
+        $query = Lecon::with('cours')->withCount('exercises')->orderBy('ordre');
+
+        if ($coursId = $request->query('cours_id')) {
+            $query->where('cours_id', $coursId);
+        } else {
+            $coursIds = Inscription::where('user_id', $request->user()->id)->pluck('cours_id');
+            $query->whereIn('cours_id', $coursIds);
+        }
+
+        return response()->json($query->get());
     }
 
     //Detail d'une lecon avec ses exercises
