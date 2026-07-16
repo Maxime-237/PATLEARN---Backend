@@ -9,12 +9,11 @@ class ExerciseController extends Controller
 {
     //Exercices d'une lecon
     public function index($lecon_id) {
-        $exercices = Exercise::where(lecon_id, $lecon_id)
-                            ->orderBy('ordre')
-                            ->with('questions')
-                            ->get();
-
-        return response()->json($exercices);
+    $exercises = Exercise::where('lecon_id', $lecon_id)
+                          ->orderBy('ordre')
+                          ->with('questions')
+                          ->get();
+        return response()->json($exercises);
     }
 
     // Détail d'un exercice avec ses questions

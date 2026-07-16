@@ -44,7 +44,7 @@ class ProgressionController extends Controller
                                     ->where('ordre', $lecon->ordre + 1)
                                     ->first();
 
-            if($leconSuivante) {
+            if($leconSuivante  && $leconSuivante->statut === 'verrouille') {
                 $leconSuivante->update(['statut' => 'debloque']);
             }
        }
